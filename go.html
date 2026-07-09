@@ -2,21 +2,42 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="音声メモ">
 <link rel="apple-touch-icon" href="https://voguaboss.github.io/vogua-voice-assets/icon.png">
 <link rel="icon" href="https://voguaboss.github.io/vogua-voice-assets/icon.png">
 <title>音声メモ</title>
-<style>html,body{height:100%;margin:0}body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#3b2fbf;color:#fff;display:flex;align-items:center;justify-content:center}</style>
+<style>
+  html,body{height:100%;margin:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN",sans-serif;
+    background:linear-gradient(135deg,#7c5cf6,#2529be);color:#fff;
+    display:flex;align-items:center;justify-content:center;text-align:center;padding:24px}
+  .box{max-width:340px}
+  img{width:96px;height:96px;border-radius:22px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+  h1{font-size:22px;margin:18px 0 6px}
+  .open{display:inline-block;margin-top:18px;background:#fff;color:#2529be;
+    text-decoration:none;font-weight:700;padding:13px 26px;border-radius:24px}
+  .hint{margin-top:22px;font-size:13px;opacity:.85;line-height:1.6}
+</style>
 </head>
 <body>
-<div>音声メモを開いています…</div>
+  <div class="box">
+    <img src="https://voguaboss.github.io/vogua-voice-assets/icon.png" alt="音声メモ">
+    <h1>音声メモ</h1>
+    <a class="open" id="open" href="#">開く ›</a>
+    <p class="hint">共有ボタン →「ホーム画面に追加」で、このアイコンから開けるようになります。</p>
+  </div>
 <script>
   var GAS = 'https://script.google.com/macros/s/AKfycbyF4C8wbqhHuAcj9b7nc-MslTm12GkVAvHphC4FUMVMjOBBmdHFF6gRvsOwSxrlfOlysQ/exec';
   var raw = (location.hash ? location.hash.slice(1) : '') || (location.search ? location.search.slice(1) : '');
   var token = '';
   raw.split('&').forEach(function(kv){ var p = kv.split('='); if (p[0] === 'token') token = decodeURIComponent(p[1] || ''); });
-  location.replace(GAS + (token ? ('?token=' + encodeURIComponent(token)) : ''));
+  var target = GAS + (token ? ('?token=' + encodeURIComponent(token)) : '');
+  document.getElementById('open').href = target;
+  // ホーム画面（スタンドアロン）から開いたときだけ自動転送
+  if (window.navigator.standalone === true) { location.replace(target); }
 </script>
 </body>
 </html>
