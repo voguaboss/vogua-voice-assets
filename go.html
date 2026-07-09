@@ -9,6 +9,19 @@
 <link rel="apple-touch-icon" href="https://voguaboss.github.io/vogua-voice-assets/icon.png">
 <link rel="icon" href="https://voguaboss.github.io/vogua-voice-assets/icon.png">
 <title>音声メモ</title>
+<script>
+  // ページ本体より先に実行：ホーム画面（スタンドアロン）から開いたら案内を出さず即転送
+  (function () {
+    var GAS = 'https://script.google.com/macros/s/AKfycbyF4C8wbqhHuAcj9b7nc-MslTm12GkVAvHphC4FUMVMjOBBmdHFF6gRvsOwSxrlfOlysQ/exec';
+    var raw = (location.hash ? location.hash.slice(1) : '') || (location.search ? location.search.slice(1) : '');
+    var token = '';
+    raw.split('&').forEach(function (kv) { var p = kv.split('='); if (p[0] === 'token') token = decodeURIComponent(p[1] || ''); });
+    window.__voiceTarget = GAS + (token ? ('?token=' + encodeURIComponent(token)) : '');
+    var standalone = (window.navigator.standalone === true) ||
+                     (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    if (standalone) { location.replace(window.__voiceTarget); }
+  })();
+</script>
 <style>
   html,body{height:100%;margin:0}
   body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN",sans-serif;
@@ -30,14 +43,7 @@
     <p class="hint">共有ボタン →「ホーム画面に追加」で、このアイコンから開けるようになります。</p>
   </div>
 <script>
-  var GAS = 'https://script.google.com/macros/s/AKfycbyF4C8wbqhHuAcj9b7nc-MslTm12GkVAvHphC4FUMVMjOBBmdHFF6gRvsOwSxrlfOlysQ/exec';
-  var raw = (location.hash ? location.hash.slice(1) : '') || (location.search ? location.search.slice(1) : '');
-  var token = '';
-  raw.split('&').forEach(function(kv){ var p = kv.split('='); if (p[0] === 'token') token = decodeURIComponent(p[1] || ''); });
-  var target = GAS + (token ? ('?token=' + encodeURIComponent(token)) : '');
-  document.getElementById('open').href = target;
-  // ホーム画面（スタンドアロン）から開いたときだけ自動転送
-  if (window.navigator.standalone === true) { location.replace(target); }
+  document.getElementById('open').href = window.__voiceTarget || '#';
 </script>
 </body>
 </html>
