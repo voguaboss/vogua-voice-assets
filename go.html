@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-title" content="音声メモ">
+<link rel="apple-touch-icon" href="https://voguaboss.github.io/vogua-voice-assets/icon.png">
+<link rel="icon" href="https://voguaboss.github.io/vogua-voice-assets/icon.png">
+<title>音声メモ</title>
+<style>html,body{height:100%;margin:0}body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#3b2fbf;color:#fff;display:flex;align-items:center;justify-content:center}</style>
+</head>
+<body>
+<div>音声メモを開いています…</div>
+<script>
+  var GAS = 'https://script.google.com/macros/s/AKfycbyF4C8wbqhHuAcj9b7nc-MslTm12GkVAvHphC4FUMVMjOBBmdHFF6gRvsOwSxrlfOlysQ/exec';
+  var raw = (location.hash ? location.hash.slice(1) : '') || (location.search ? location.search.slice(1) : '');
+  var token = '';
+  raw.split('&').forEach(function(kv){ var p = kv.split('='); if (p[0] === 'token') token = decodeURIComponent(p[1] || ''); });
+  location.replace(GAS + (token ? ('?token=' + encodeURIComponent(token)) : ''));
+</script>
+</body>
+</html>
